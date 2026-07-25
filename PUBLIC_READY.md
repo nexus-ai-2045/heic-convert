@@ -20,8 +20,9 @@
 
 ## GitHub 側 (未検証 / 公開前に要実施)
 
-- [ ] private repo 作成 + push 後、`gh api -X PUT repos/nexus-ai-2045/heic-convert/private-vulnerability-reporting`
-      → GET で `enabled=true` を実測。
+- [x] private repo 作成済み (`nexus-ai-2045/heic-convert`, visibility=private を API 実測)。
+- [ ] **public 化直後**: `gh api -X PUT repos/nexus-ai-2045/heic-convert/private-vulnerability-reporting`
+      → GET で `enabled=true` を実測 (2026-07-20 実測: private repo では 404 = 本機能は public repo 限定)。
 - [ ] secret scanning / push protection の有効化確認 (公開後に audit-public-repo-lockdown が監視)。
 - [ ] push_gate 登録: `github-account-repo-map.md` + `push_gate.sh` の `PUBLIC_PUSH_ALLOWLIST` 追記 (CEO 承認 / Type1)。
 - [ ] CEO による内容の目視レビュー。
