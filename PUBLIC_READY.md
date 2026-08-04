@@ -1,6 +1,7 @@
 # PUBLIC_READY — 公開判定メモ
 
-対象: `nexus-ai-2045/heic-convert` / 判定日: 2026-07-25 (機能検証の実施日: 2026-07-20)
+対象: `nexus-ai-2045/heic-convert`
+状態: **公開済み** (2026-07-29 public 化) / 機能検証 2026-07-20 / 判定 2026-07-25 / 最終確認 2026-08-04
 
 ## ローカル確認済み
 
@@ -18,15 +19,20 @@
       依存 (Pillow: MIT-CMU / pillow-heif: BSD-3-Clause) は同梱せず利用者インストール方式。
 - [x] SECURITY.md / LICENSE / README (ライセンスと出典セクション) 配置済み。
 
-## GitHub 側 (未検証 / 公開前に要実施)
+## GitHub 側 (公開完了 / 2026-07-29 実施・2026-08-04 最終確認)
 
-- [x] private repo 作成済み (`nexus-ai-2045/heic-convert`, visibility=private を API 実測)。
-- [ ] **public 化直後**: `gh api -X PUT repos/nexus-ai-2045/heic-convert/private-vulnerability-reporting`
-      → GET で `enabled=true` を実測 (2026-07-25 実測: private repo では 404 = 本機能は public repo 限定)。
-- [ ] secret scanning / push protection の有効化確認 (公開後に audit-public-repo-lockdown が監視)。
-- [ ] push_gate 登録: `github-account-repo-map.md` + `push_gate.sh` の `PUBLIC_PUSH_ALLOWLIST` 追記 (CEO 承認 / Type1)。
-- [ ] CEO による内容の目視レビュー。
-- [ ] **public 化 (visibility 変更) — CEO 明示承認が gate。ここまでは一切実施しない。**
+- [x] repo 作成 (`nexus-ai-2045/heic-convert`)。
+- [x] **public 化** — CEO 明示承認のうえ visibility を変更。API で `visibility=public` を実測。
+- [x] Private Vulnerability Reporting — 有効化後 GET で `enabled=true` を実測。
+      (private repo では同 API が 404 を返す = 本機能は public repo 限定であることを実測確認済み)
+- [x] secret scanning / push protection — 公開直後は両方 disabled だったため有効化し、`enabled` を実測。
+- [x] lockdown 監査 — `audit-public-repo-lockdown.ps1` 実行。全 public repo PASS。本 repo は
+      public_ready / readme / license / security すべて True、secret 検出 0、個人パス scan clean。
+- [x] 内容の目視レビュー (CEO)。
+- [x] repo↔account map への登録 — Projects PR #486 として merge 済み (2026-08-02)。
+      当初予定していた `push_gate.sh` の `PUBLIC_PUSH_ALLOWLIST` 追記は、2026-07-26 の identity
+      registry 移行で同 allowlist 自体が廃止されたため不要と判断して取り下げた
+      (owner=nexus-ai-2045 は公開 lane identity として自動導出される)。
 
 ## 残課題 (公開ブロッカーではない)
 
